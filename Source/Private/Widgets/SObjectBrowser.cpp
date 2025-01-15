@@ -1,14 +1,14 @@
 // Copyright 1998-2017 Epic Games, Inc. All Rights Reserved.
 
-#include "ObjectBrowserModule.h"
 #include "SObjectBrowser.h"
+#include "ObjectBrowserModule.h"
 #include "SObjectBrowserTableRow.h"
 #include "PropertyEditorModule.h"
 #include "IDetailsView.h"
 #include "EditorFontGlyphs.h"
 
 #include "ClassViewerModule.h"
-#include "SClassPickerDialog.h"
+#include "Kismet2/SClassPickerDialog.h"
 
 #define LOCTEXT_NAMESPACE "SObjectBrowser"
 
@@ -37,7 +37,7 @@ void SObjectBrowser::Construct( const FArguments& InArgs )
 		/*InNotifyHook=*/ nullptr,
 		/*InSearchInitialKeyFocus=*/ false,
 		/*InViewIdentifier=*/ NAME_None);
-	DetailsViewArgs.DefaultsOnlyVisibility = FDetailsViewArgs::EEditDefaultsOnlyNodeVisibility::Automatic;
+	DetailsViewArgs.DefaultsOnlyVisibility = EEditDefaultsOnlyNodeVisibility::Automatic;
 
 	PropertyView = EditModule.CreateDetailView(DetailsViewArgs);
 
@@ -51,7 +51,7 @@ void SObjectBrowser::Construct( const FArguments& InArgs )
 		[
 			SNew(SBorder)
 			.Padding(FMargin(3))
-			.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+			.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
 			[
 				SNew(SVerticalBox)
 
@@ -84,7 +84,7 @@ void SObjectBrowser::Construct( const FArguments& InArgs )
 					.AutoWidth()
 					[
 						SNew(SComboButton)
-						.ComboButtonStyle(FEditorStyle::Get(), "ContentBrowser.Filters.Style")
+						.ComboButtonStyle(FAppStyle::Get(), "ContentBrowser.Filters.Style")
 						.ForegroundColor(FLinearColor::White)
 						.ContentPadding(0)
 						.ToolTipText(LOCTEXT("AddFilterToolTip", "Add a search filter."))
@@ -99,8 +99,8 @@ void SObjectBrowser::Construct( const FArguments& InArgs )
 							.AutoWidth()
 							[
 								SNew(STextBlock)
-								.TextStyle(FEditorStyle::Get(), "ContentBrowser.Filters.Text")
-								.Font(FEditorStyle::Get().GetFontStyle("FontAwesome.9"))
+								.TextStyle(FAppStyle::Get(), "ContentBrowser.Filters.Text")
+								.Font(FAppStyle::Get().GetFontStyle("FontAwesome.9"))
 								.Text(FEditorFontGlyphs::Filter)
 							]
 
@@ -109,7 +109,7 @@ void SObjectBrowser::Construct( const FArguments& InArgs )
 							.Padding(2, 0, 0, 0)
 							[
 								SNew(STextBlock)
-								.TextStyle(FEditorStyle::Get(), "ContentBrowser.Filters.Text")
+								.TextStyle(FAppStyle::Get(), "ContentBrowser.Filters.Text")
 								.Text(LOCTEXT("Filters", "Filters"))
 							]
 						]
@@ -131,7 +131,7 @@ void SObjectBrowser::Construct( const FArguments& InArgs )
 				.FillHeight(1.0f)
 				[
 					SNew(SBorder)
-					.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+					.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
 					.Padding(FMargin(0.0f, 4.0f))
 					[
 						SAssignNew(ObjectListView, SListView< TSharedPtr<FBrowserObject> >)
@@ -159,7 +159,7 @@ void SObjectBrowser::Construct( const FArguments& InArgs )
 		[
 			SNew(SBorder)
 			.Padding(FMargin(3))
-			.BorderImage(FEditorStyle::GetBrush("ToolPanel.GroupBorder"))
+			.BorderImage(FAppStyle::GetBrush("ToolPanel.GroupBorder"))
 			[
 				PropertyView.ToSharedRef()
 			]
@@ -216,9 +216,9 @@ void SObjectBrowser::AddBoolFilter(FMenuBuilder& MenuBuilder, FText Text, FText 
 		InToolTip,
 		FSlateIcon(),
 		FUIAction(
-			FExecuteAction::CreateLambda([=]{ *BoolOption = !( *BoolOption ); RefreshList(); }),
+			FExecuteAction::CreateLambda([&]{ *BoolOption = !( *BoolOption ); RefreshList(); }),
 			FCanExecuteAction(),
-			FIsActionChecked::CreateLambda([=]{ return *BoolOption; })
+			FIsActionChecked::CreateLambda([&]{ return *BoolOption; })
 		),
 		NAME_None,
 		EUserInterfaceActionType::ToggleButton

@@ -7,7 +7,6 @@
 #include "EditorStyleSet.h"
 
 #include "Editor/WorkspaceMenuStructure/Public/WorkspaceMenuStructureModule.h"
-#include "SDockTab.h"
 
 #define LOCTEXT_NAMESPACE "ObjectBrowser"
 
@@ -16,7 +15,7 @@ void FObjectBrowserModule::StartupModule()
 	FGlobalTabmanager::Get()->RegisterNomadTabSpawner(ObjectBrowserTabName, FOnSpawnTab::CreateRaw(this, &FObjectBrowserModule::HandleSpawnSettingsTab))
 		.SetDisplayName(LOCTEXT("ObjectBrowserTabTitle", "Object Browser"))
 		.SetTooltipText(LOCTEXT("ObjectBrowserTooltipText", "Open the Object Browser tab."))
-		.SetIcon(FSlateIcon(FEditorStyle::GetStyleSetName(), "ObjectBrowser.TabIcon"))
+		.SetIcon(FSlateIcon(FAppStyle::GetAppStyleSetName(), "ObjectBrowser.TabIcon"))
 		.SetGroup(WorkspaceMenu::GetMenuStructure().GetDeveloperToolsMiscCategory());
 }
 

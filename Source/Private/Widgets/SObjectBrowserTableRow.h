@@ -3,7 +3,6 @@
 #pragma once
 
 #include "ClassIconFinder.h"
-#include "Toolkits/AssetEditorManager.h"
 #include "CoreMinimal.h"
 #include "Widgets/SWidget.h"
 #include "Widgets/Views/STableRow.h"
@@ -97,7 +96,7 @@ public:
 	{
 		if ( UObject* LiveObject = BrowserObject->Object.Get() )
 		{
-			FAssetEditorManager::Get().OpenEditorForAsset(LiveObject);
+			GEditor->GetEditorSubsystem<UAssetEditorSubsystem>()->OpenEditorForAsset(LiveObject);
 		}
 
 		return FReply::Handled();

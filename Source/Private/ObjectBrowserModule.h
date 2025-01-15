@@ -23,7 +23,7 @@ public:
 
 	static void ExecuteOpenObjectBrowser()
 	{
-		FGlobalTabmanager::Get()->InvokeTab(ObjectBrowserTabName);
+		FGlobalTabmanager::Get()->TryInvokeTab(ObjectBrowserTabName);
 	}
 
 private:
